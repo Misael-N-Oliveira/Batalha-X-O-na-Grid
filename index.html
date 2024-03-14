@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo Da Velha</title>
+
+    <style>
+        
+
+           body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://static.vecteezy.com/ti/vetor-gratis/p3/15998105-fundo-de-jogo-futurista-verde-escuro-abstrato-com-padrao-de-hexagono-fundo-geometrico-verde-escuro-para-banner-ou-fluxo-offline-modelo-de-plano-de-fundo-de-jogos-vetor.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+footer {
+
+    background-color: #333; 
+    color: white; 
+    padding: 10px; 
+    text-align: left; 
+}
+
+        h1{ color: chartreuse;
+            background-color: hwb(271 0% 42%);
+            border-radius: 15px;
+            font-size: 50px;
+            margin: 5 50px; 
+            padding: 20px;
+            font-family:'Courier New', Courier, monospace;
+            
+        
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3,150px);
+            grid-template-rows: repeat(3,150px);
+            gap: 2px;
+        }
+        .cell {
+            margin: 5px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 64px;
+            cursor: pointer;
+           font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+           color: chartreuse;
+           background-color: rgb(76, 0, 148);
+        }
+        .cell-X, .cell-O {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+</head>
+<h1>Batalha X-O na Grid</h1>
+<body>
+   <div class="board" id="board">
+    <div class="cell" onclick="cellClicked(0)"></div>
+    <div class="cell" onclick="cellClicked(1)"></div>
+    <div class="cell" onclick="cellClicked(2)"></div>
+    <div class="cell" onclick="cellClicked(3)"></div>
+    <div class="cell" onclick="cellClicked(4)"></div>
+    <div class="cell" onclick="cellClicked(5)"></div>
+    <div class="cell" onclick="cellClicked(6)"></div>
+    <div class="cell" onclick="cellClicked(7)"></div>
+    <div class="cell" onclick="cellClicked(8)"></div>
+
+   </div> 
+
+   <script>
+    let currentPlayer = 'X';
+    let board = ['','','','','','','','',''];
+
+    function cellClicked(index) {
+        if (board[index] === '') {
+            board[index] = currentPlayer;
+            document.getElementById('board').children[index].innerText = currentPlayer;
+            checkWinner();
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+    }
+
+    function checkWinner() {
+        const winConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ];
+
+        for (let condition of winConditions) {
+            const [a, b, c] = condition;
+            if (board[a] !== '' && board[a] === board[b] && board[a] === board[c]) {
+                alert(`Jogador ( ${board[a]} ) Venceu!!!`);
+                resetBoard();
+                return;
+            }
+        }
+
+        if (!board.includes('')) {
+            alert('EMPATE');
+            resetBoard();
+        }
+    }
+
+    function resetBoard() {
+        currentPlayer = 'X';
+        board = ['','','','','','','','',''];
+        for (let i = 0; i < 9; i++) {
+            document.getElementById('board').children[i].innerText = '';
+        }
+    }
+   </script>
+
+   <footer><h5>Desemvolvido por | Misael Oliveira | 2024. </h5></footer>
+</body>
+</html>
